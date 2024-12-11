@@ -1,0 +1,67 @@
+---
+format: 
+  pdf:
+    fontsize: 16pt
+    geometry:
+      - top=10mm
+      - bottom=10mm
+      - left=20mm
+      - right=20mm
+      - heightrounded
+    documentclass: article
+params:
+  classe: ""
+  jour: ""
+  heure: ""
+  salle: ""
+  prof: ""
+---
+```{r}
+#| include: false
+
+library('dplyr')
+library('knitr')
+library('kableExtra')
+
+eleves <- read.csv2('eleves.csv')
+
+nb_eleves <- eleves %>% 
+  filter(classe == params$classe) %>% 
+  nrow()
+```
+
+# Liste des élèves de la classe `r params$classe`
+
+
+***
+
+
+**Jour de collecte:** `r params$jour`
+
+**Heures de collecte:** `r params$heure`
+
+**Salle:** `r params$salle`
+
+**Professeur:** `r params$prof`
+
+**Nombre d'élèves:** `r nb_eleves`
+
+***
+
+
+```{r}
+#| label: tab_eleves
+#| echo: false
+#| fig-pos: "h"
+
+eleves %>% 
+  filter(classe == params$classe) %>% 
+  mutate(Avancement = "                                  ") %>% 
+  kable(col.names = c("IDENTIFIANT", "CLASSE", "NOM", "PRENOM", "Avancement")) %>% 
+  kable_styling(
+    font_size = 14,
+    latex_options = "striped")
+```
+
+
+
