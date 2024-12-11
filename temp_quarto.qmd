@@ -16,14 +16,16 @@ params:
   salle: ""
   prof: ""
 ---
+
 ```{r}
+#| label: packages_donnnees
 #| include: false
 
 library('dplyr')
 library('knitr')
 library('kableExtra')
 
-eleves <- read.csv2('eleves.csv')
+eleves <- read.csv2('_donnees/eleves.csv')
 
 nb_eleves <- eleves %>% 
   filter(classe == params$classe) %>% 
@@ -32,9 +34,7 @@ nb_eleves <- eleves %>%
 
 # Liste des élèves de la classe `r params$classe`
 
-
 ***
-
 
 **Jour de collecte:** `r params$jour`
 
@@ -48,7 +48,6 @@ nb_eleves <- eleves %>%
 
 ***
 
-
 ```{r}
 #| label: tab_eleves
 #| echo: false
@@ -56,12 +55,10 @@ nb_eleves <- eleves %>%
 
 eleves %>% 
   filter(classe == params$classe) %>% 
+  select(id, classe, nom, prenom) %>% 
   mutate(Avancement = "                                  ") %>% 
   kable(col.names = c("IDENTIFIANT", "CLASSE", "NOM", "PRENOM", "Avancement")) %>% 
   kable_styling(
     font_size = 14,
     latex_options = "striped")
 ```
-
-
-

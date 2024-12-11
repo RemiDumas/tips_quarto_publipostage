@@ -1,7 +1,6 @@
 # Packages ------------------------------------------------------------- ####
 library('quarto')
 library('dplyr')
-library('stringr')
 library('purrr')
 library('qpdf')
 library('glue')
@@ -32,7 +31,7 @@ rendu_classe <- function(id) {
 classes %>% 
   distinct(id_cl) %>% 
   pull(id_cl) %>% 
-  walk(~ rendu_classe(.x))
+  walk(function(x) rendu_classe(x))
 
 # Fusion des fichiers ----------------------------------------------------####
 classes %>% 
